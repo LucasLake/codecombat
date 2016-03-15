@@ -51,6 +51,7 @@ module.exports = GPlusHandler = class GPlusHandler extends CocoClass
         authorize: (opts, cb) ->
           cb({access_token: '1234'})
           
+    @startedLoading = true
     @apiLoaded = true
     
   fakeConnect: ->

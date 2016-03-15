@@ -32,7 +32,8 @@ module.exports = FacebookHandler = class FacebookHandler extends CocoClass
           id: 'abcd'
           email: 'some@email.com'
         })
-        
+
+    @startedLoading = true
     @apiLoaded = true
 
   loadAPI: (options={}) ->
