@@ -7,8 +7,6 @@ application  = require 'core/application'
 Classroom = require 'models/Classroom'
 errors = require 'core/errors'
 
-# TODO: Avoid using G+ render buttons to login, login directly instead.
-# Form object is split in two in template to avoid having rendered buttons triggered on form submit.
 
 module.exports = class CreateAccountModal extends ModalView
   id: 'create-account-modal'
