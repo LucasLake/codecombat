@@ -25,6 +25,7 @@ describe 'RequestQuoteView', ->
   describe 'when user is anonymous and has no role', ->
     beforeEach (done) ->
       me.clear()
+      me.set('_id', '1234')
       me._revertAttributes = {}
       spyOn(me, 'isAnonymous').and.returnValue(true)
       view = new RequestQuoteView()
@@ -85,6 +86,35 @@ describe 'RequestQuoteView', ->
       
       it 'shows a signup form', ->
         expect(view.$('#signup-form').hasClass('hide')).toBe(false)
+        
+      describe 'signup form', ->
+        beforeEach ->
+          application.facebookHandler.fakeAPI()
+          application.gplusHandler.fakeAPI()
+        
+        it 'includes a facebook button which will sign them in immediately', ->
+          view.$('#facebook-signup-btn').click()
+          request = jasmine.Ajax.requests.mostRecent()
+          expect(request.method).toBe('PUT')
+          expect(request.url).toBe('/db/user?facebookID=abcd&facebookAccessToken=1234')
+          
+        it 'includes a gplus button which will sign them in immediately', ->
+          view.$('#gplus-signup-btn').click()
+          request = jasmine.Ajax.requests.mostRecent()
+          expect(request.method).toBe('PUT')
+          expect(request.url).toBe('/db/user?gplusID=abcd&gplusAccessToken=1234')
+          
+        it 'can sign them up with username and password', ->
+          form = view.$('#signup-form')
+          forms.objectToForm(form, {
+            password1: 'asdf'
+            password2: 'asdf'
+            name: 'some name'
+          })
+          form.submit()
+          request = jasmine.Ajax.requests.mostRecent()
+          expect(request.method).toBe('PUT')
+          expect(request.url).toBe('/db/user/1234')
       
     describe 'when an anonymous user tries to submit a request with an existing user\'s email', ->
   
