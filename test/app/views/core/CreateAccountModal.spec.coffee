@@ -6,16 +6,12 @@ describe 'CreateAccountModal', ->
   modal = null
   
   initModal = (options) ->
+    application.facebookHandler.fakeAPI()
+    application.gplusHandler.fakeAPI()
     modal = new CreateAccountModal(options)
     modal.render()
     modal.render = _.noop
     jasmine.demoModal(modal)
-    window.gapi =
-      client:
-        load: _.noop
-    window.FB =
-      login: _.noop
-      api: _.noop
   
   afterEach ->
     modal.stopListening()
@@ -84,11 +80,9 @@ describe 'CreateAccountModal', ->
       describe 'the Classroom does not exist', ->
         it 'shows an error and clears the field', ->
           request = jasmine.Ajax.requests.mostRecent()
-          console.log 'school input?', modal.$('#class-code-input').val()
           request.respondWith({status: 404, responseText: JSON.stringify({})})
           expect(jasmine.Ajax.requests.all().length).toBe(1)
           expect(modal.$el.has('.has-error').length).toBeTruthy()
-          console.log 'school input?', modal.$('#class-code-input').val()
           expect(modal.$('#class-code-input').val()).toBe('')
         
       
@@ -98,12 +92,9 @@ describe 'CreateAccountModal', ->
 
     beforeEach ->
       initModal()
-      application.gplusHandler.trigger 'render-login-buttons'
       signupButton = modal.$('#gplus-signup-btn')
       expect(signupButton.attr('disabled')).toBeFalsy()
       signupButton.click()
-      application.gplusHandler.fakeGPlusLogin()
-      application.gplusHandler.trigger 'person-loaded', { firstName: 'Mr', lastName: 'Bean', gplusID: 'abcd', email: 'some@email.com' }
     
     it 'checks to see if the user already exists in our system', ->
       requests = jasmine.Ajax.requests.all()
@@ -167,12 +158,9 @@ describe 'CreateAccountModal', ->
 
     beforeEach ->
       initModal()
-      Backbone.Mediator.publish 'auth:facebook-api-loaded', {}
       signupButton = modal.$('#facebook-signup-btn')
       expect(signupButton.attr('disabled')).toBeFalsy()
       signupButton.click()
-      application.facebookHandler.fakeFacebookLogin()
-      application.facebookHandler.trigger 'person-loaded', { firstName: 'Mr', lastName: 'Bean', facebookID: 'abcd', email: 'some@email.com' }
 
     it 'checks to see if the user already exists in our system', ->
       requests = jasmine.Ajax.requests.all()
