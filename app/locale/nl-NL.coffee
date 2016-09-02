@@ -6,7 +6,7 @@ module.exports = nativeDescription: "Nederlands (Nederland)", englishDescription
     play: "Speel" # The big play button that opens up the campaign view.
     play_campaign_version: "Speel de Verhaallijn" # Shows up under big play button if you only play /courses
     old_browser: "uh-oh, jouw browser is te oud om CodeCombat te kunnen spelen, Sorry!" # Warning that shows up on really old Firefox/Chrome/Safari
-    old_browser_suffix: "Je kan het alsnog proberen, maar het zal waarschijnlijk niet werken!"
+    old_browser_suffix: "Je kunt het wel proberen, maar het zal waarschijnlijk niet werken."
     ipad_browser: "Slecht nieuws: CodeCombat draait niet in je browser op de iPad. Goed nieuws: onze iPad-app wordt op het moment beoordeeld door Apple."
     campaign: "Verhaallijn"
     for_beginners: "Voor Beginners"
@@ -118,7 +118,7 @@ module.exports = nativeDescription: "Nederlands (Nederland)", englishDescription
     twitter: "Twitter"
     create_a_class: "Maak een Klas"
     other: "Andere"
-    learn_to_code: "Leer te programmeren!"
+    learn_to_code: "Leer programmeren!"
     toggle_nav: "Toggle navigatie"
     jobs: "Banen"
     schools: "Scholen"
